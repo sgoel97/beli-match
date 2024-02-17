@@ -1,6 +1,7 @@
-import { AppShell, Container, Center, Group, Burger } from "@mantine/core";
+import { AppShell, Container, Group, Burger } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./header.module.css";
+import Logo from "../assets/logo.png";
 
 import { Link, useLocation } from "react-router-dom";
 
@@ -16,6 +17,7 @@ const Layout = ({ children, ...style }) => {
   const items = links.map((link) => (
     <Link
       to={link.link}
+      key={link.label}
       className={classes.link}
       data-active={pathname === link.link || undefined}
     >
@@ -24,12 +26,12 @@ const Layout = ({ children, ...style }) => {
   ));
 
   return (
-    <AppShell header={{ height: 60 }} padding="md">
-      <AppShell.Header style={{ border: "1px solid blue" }}>
+    <AppShell header={{ height: 70 }} padding="md">
+      <AppShell.Header>
         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
         <Container size="xl" className={classes.inner}>
           <Group>
-            <p>BeliMatch</p>
+            <img src={Logo} height={50} />
           </Group>
           <Group gap={5} visibleFrom="xs">
             {items}
@@ -38,12 +40,10 @@ const Layout = ({ children, ...style }) => {
           <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
         </Container>
       </AppShell.Header>
-      <AppShell.Main style={{ border: "1px solid blue", width: "100vw" }}>
-        <Center>
-          <Container size="lg" style={{ textAlign: "center", ...style }}>
-            {children}
-          </Container>
-        </Center>
+      <AppShell.Main style={{ width: "100vw" }}>
+        <Container size="xl" style={style}>
+          {children}
+        </Container>
       </AppShell.Main>
     </AppShell>
   );
