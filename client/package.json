@@ -20,6 +20,7 @@
     "@mantine/nprogress": "^7.5.3",
     "dayjs": "^1.11.10",
     "embla-carousel-react": "^8.0.0-rc22",
+    "firebase": "^10.8.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",
     "postcss": "^8.4.35",

@@ -1,13 +1,12 @@
 import {
   Title,
-  Text,
   Stack,
   Fieldset,
   Flex,
   Button,
-  Input,
   TextInput,
   Select,
+  Checkbox,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 
@@ -25,9 +24,19 @@ const Home = () => {
       insta: "",
       phone: "",
       gender: "",
-      lookingFor: "love",
-      restaurantRecs: true,
+      lookingFor: "Love",
+      restaurantRecs: "Yes",
       loveMatch: "",
+
+      beli: "",
+      yelp: "",
+      restaurants: "",
+      city: "",
+
+      cheese: "",
+      cuisine: "",
+      first: "",
+      buffet: "",
 
       termsOfService: false,
     },
@@ -39,6 +48,16 @@ const Home = () => {
         value && value.length > 2 ? null : "Last name is required",
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
       school: (value) => (value ? null : "Please select a school"),
+      insta: (value) => (value ? null : "Please enter a handle or link"),
+
+      gender: (value) => (value ? null : "Please choose an option"),
+      lookingFor: (value) => (value ? null : "Please choose an option"),
+      restaurantRecs: (value) => (value ? null : "Please choose an option"),
+      loveMatch: (value) => (value ? null : "Please choose an option"),
+
+      city: (value) => (value ? null : "Please enter in a city"),
+      termsOfService: (value) =>
+        value ? false : "You must agree to use BeliMatch",
     },
   });
 
@@ -48,20 +67,23 @@ const Home = () => {
 
   return (
     <Layout>
-      <Heading title="BeliMatch" subtitle="test" />
+      <Heading
+        title=""
+        subtitle="Find Your Perfect Plate Partner with BeliMatch – Where Shared Tastes Lead to Lasting Connections!"
+      />
 
       <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
-        <Stack w={500} m="auto" gap="xl">
+        <Stack m="auto" gap="xl" style={{ width: "100%", maxWidth: 550 }}>
           <Fieldset legend="Contact Information">
             <Stack gap="sm">
-              <Flex justify="space-between">
+              <Flex justify="space-between" gap={20}>
                 <TextInput
-                  w={200}
+                  w={225}
                   label="First Name"
                   {...form.getInputProps("firstName")}
                 />
                 <TextInput
-                  w={200}
+                  w={225}
                   label="Last Name"
                   {...form.getInputProps("lastName")}
                 />
@@ -76,6 +98,7 @@ const Home = () => {
               <Select
                 label="School"
                 placeholder="Stanford"
+                searchable
                 data={[
                   "UC Berkeley",
                   "MIT",
@@ -177,6 +200,101 @@ const Home = () => {
             </Stack>
           </Fieldset>
 
+          <Fieldset legend="Food">
+            <Stack gap="sm">
+              <TextInput
+                label="Beli Username"
+                placeholder="@belimatch"
+                {...form.getInputProps("beli")}
+              />
+
+              <Title order={5}>OR</Title>
+
+              <TextInput
+                label="Yelp Link"
+                placeholder="@belimatch"
+                {...form.getInputProps("yelp")}
+              />
+
+              <Title order={5}>OR</Title>
+
+              <TextInput
+                label="The Names/City of your Top 5 Favorite Restaurants"
+                description="Use the format {Restaurant Name} - {City}, {State})"
+                placeholder="@belimatch"
+                {...form.getInputProps("restaurants")}
+              />
+
+              <TextInput
+                label="What is your favorite city for food?"
+                placeholder="San Francisco"
+                {...form.getInputProps("city")}
+              />
+            </Stack>
+          </Fieldset>
+
+          <Fieldset legend="Optional">
+            <Stack gap="sm">
+              <Title order={3}>
+                The rest of these questions are for fun, they're optional!
+              </Title>
+              <Select
+                label="If you were a type of cheese, which one would you be?"
+                placeholder="Choose One"
+                data={[
+                  "Cheddar – Classic, reliable, and great in all situations",
+                  "Blue Cheese – Bold, distinctive, and a bit of a wildcard",
+                  "Brie – Sophisticated, creamy, and always the life of the party",
+                  "Vegan Cheese – Innovative, inclusive, and full of surprises",
+                ]}
+                {...form.getInputProps("cheese")}
+              />
+
+              <Select
+                label="Your ideal first meeting involves:"
+                placeholder="Choose One"
+                data={[
+                  "A five-course meal at a Michelin-star restaurant",
+                  "Cooking a new recipe together at home",
+                  "Street food tour in the city",
+                  "A food-themed trivia night at a local pub",
+                ]}
+                {...form.getInputProps("first")}
+              />
+
+              <Select
+                label="If you could only eat one cuisine for the rest of your life, what would it be?"
+                placeholder="Choose One"
+                data={[
+                  "Italian – Because life without pasta is unthinkable",
+                  "Japanese – Fresh, refined, and a little bit adventurous",
+                  "Mexican – Bold flavors and the best comfort food",
+                  "Indian – Spicy, diverse, and utterly delicious",
+                ]}
+                {...form.getInputProps("cuisine")}
+              />
+
+              <Select
+                label="At a buffet, you head straight for:"
+                placeholder="Choose One"
+                data={[
+                  "The seafood section – A taste of the ocean",
+                  "The carving station – Meat, meat, and more meat",
+                  "The vegan corner – Green and clean",
+                  "The dessert table – First come, first served",
+                  "The exotic foods – Always up for a culinary adventure",
+                ]}
+                {...form.getInputProps("buffet")}
+              />
+            </Stack>
+          </Fieldset>
+
+          <Checkbox
+            ml="md"
+            label=" Data Note: Please confirm below that you're allowing us to send
+          you an email to you and your match with each others' information!"
+            {...form.getInputProps("termsOfService", { type: "checkbox" })}
+          />
           <Button type="submit">Submit</Button>
         </Stack>
       </form>
