@@ -12,6 +12,22 @@ import { useForm } from "@mantine/form";
 
 import Layout from "../components/Layout";
 import Heading from "../components/Heading";
+import { initializeApp } from "firebase/app";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCtRVuffLhGrEclezlrDmJ9mLX-qafBoOQ",
+  authDomain: "beli-match.firebaseapp.com",
+  projectId: "beli-match",
+  storageBucket: "beli-match.appspot.com",
+  messagingSenderId: "681031852804",
+  appId: "1:681031852804:web:5e2a47572749b19a086651",
+  measurementId: "G-FS4NG19DTS",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 const Home = () => {
   const form = useForm({
@@ -63,6 +79,7 @@ const Home = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+    setDoc(doc(db, "users", data.email), data);
   };
 
   return (
