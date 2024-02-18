@@ -45,7 +45,7 @@ const Layout = ({ children, ...style }) => {
             {items}
           </Group>
 
-          <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
+          {/* <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" /> */}
         </Container>
       </header>
 
