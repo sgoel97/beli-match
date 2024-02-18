@@ -11,6 +11,7 @@ import {
 import { useForm } from "react-hook-form";
 
 import Layout from "../components/Layout";
+import Heading from "../components/Heading";
 
 const Home = () => {
   const {
@@ -25,10 +26,7 @@ const Home = () => {
 
   return (
     <Layout>
-      <Stack align="center" mb={32}>
-        <Title>BeliMatch</Title>
-        <Text>hi</Text>
-      </Stack>
+      <Heading title="BeliMatch" subtitle="test" />
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack w={500} m="auto" gap="xl">

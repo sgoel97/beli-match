@@ -1,9 +1,10 @@
 import Layout from "../components/Layout";
+import Heading from "../components/Heading";
 
 const About = () => {
   return (
     <Layout>
-      <p>about</p>
+      <Heading title="About BeliMatch" subtitle="test" />
     </Layout>
   );
 };
