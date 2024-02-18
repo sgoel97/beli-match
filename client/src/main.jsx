@@ -26,6 +26,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       theme={{
         fontFamily: "Open Sans, sans-serif",
         headings: { fontFamily: "Poppins, sans-serif" },
+        primaryColor: "red",
       }}
     >
       <RouterProvider router={router} />

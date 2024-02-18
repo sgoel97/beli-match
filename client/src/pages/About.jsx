@@ -1,9 +1,14 @@
+import { useEffect } from "react";
 import { Text, Box, Title } from "@mantine/core";
 
 import Layout from "../components/Layout";
 import Heading from "../components/Heading";
 
 const About = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Layout>
       <Heading title="About Us" />

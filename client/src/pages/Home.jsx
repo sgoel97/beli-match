@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Title,
   Stack,
@@ -7,6 +8,7 @@ import {
   TextInput,
   Select,
   Checkbox,
+  Text,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 
@@ -30,6 +32,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const Home = () => {
+  const [submitted, setSubmitted] = useState(false);
   const form = useForm({
     initialValues: {
       firstName: "",
@@ -64,7 +67,16 @@ const Home = () => {
         value && value.length > 2 ? null : "Last name is required",
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
       school: (value) => (value ? null : "Please select a school"),
+      otherSchool: (value, values) =>
+        values.school == "Not on this list" && !value
+          ? "Please enter a school name"
+          : null,
       insta: (value) => (value ? null : "Please enter a handle or link"),
+
+      beli: (value, values) =>
+        value || values.yelp || values.restaurants
+          ? null
+          : "Please input some food information",
 
       gender: (value) => (value ? null : "Please choose an option"),
       lookingFor: (value) => (value ? null : "Please choose an option"),
@@ -80,14 +92,29 @@ const Home = () => {
   const onSubmit = (data) => {
     console.log(data);
     setDoc(doc(db, "users", data.email), data);
+    setSubmitted(true);
   };
+
+  if (submitted) {
+    return (
+      <Layout>
+        <Heading subtitle="Thank you for participating in BeliMatch!" />
+        <Flex direction="column" align="center">
+          <Text mb={36} align="center">
+            We will get back to you near the end of the hackathon with your top
+            food match and some food recommendations.
+          </Text>
+          <Button w={200} onClick={() => setSubmitted(false)}>
+            Submit Again
+          </Button>
+        </Flex>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
-      <Heading
-        title=""
-        subtitle="Find Your Perfect Plate Partner with BeliMatch – Where Shared Tastes Lead to Lasting Connections!"
-      />
+      <Heading subtitle="Find Your Perfect Plate Partner with BeliMatch – Where Shared Tastes Lead to Lasting Connections!" />
 
       <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
         <Stack m="auto" gap="xl" style={{ width: "100%", maxWidth: 550 }}>
