@@ -64,15 +64,15 @@ const Home = () => {
     validate: {
       firstName: (value) =>
         value && value.length > 2 ? null : "First name is required",
-      lastName: (value) =>
-        value && value.length > 2 ? null : "Last name is required",
+      // lastName: (value) =>
+      //   value && value.length > 2 ? null : "Last name is required",
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-      school: (value) => (value ? null : "Please select a school"),
-      otherSchool: (value, values) =>
-        values.school == "Not on this list" && !value
-          ? "Please enter a school name"
-          : null,
-      insta: (value) => (value ? null : "Please enter a handle or link"),
+      // school: (value) => (value ? null : "Please select a school"),
+      // otherSchool: (value, values) =>
+      //   values.school == "Not on this list" && !value
+      //     ? "Please enter a school name"
+      //     : null,
+      // insta: (value) => (value ? null : "Please enter a handle or link"),
 
       beli: (value, values) =>
         value || values.yelp || values.restaurants
@@ -93,6 +93,7 @@ const Home = () => {
   const onSubmit = (data) => {
     console.log(data);
     setDoc(doc(db, "users", data.email), data);
+    form.reset();
     setSubmitted(true);
   };
 
@@ -123,22 +124,22 @@ const Home = () => {
             <Stack gap="sm">
               <Flex justify="space-between" gap={20}>
                 <TextInput
-                  w={225}
-                  label="First Name"
+                  w={300}
+                  label="Full Name"
                   {...form.getInputProps("firstName")}
                 />
-                <TextInput
+                {/* <TextInput
                   w={225}
                   label="Last Name"
                   {...form.getInputProps("lastName")}
-                />
+                /> */}
               </Flex>
 
-              <TextInput
+              {/* <TextInput
                 label="Instagram Handle or Facebook Link"
                 placeholder="@belimatch"
                 {...form.getInputProps("insta")}
-              />
+              /> */}
 
               <TextInput
                 label="School Email Address"
@@ -146,7 +147,7 @@ const Home = () => {
                 {...form.getInputProps("email")}
               />
 
-              <Select
+              {/* <Select
                 label="School"
                 placeholder="Stanford"
                 searchable
@@ -190,18 +191,18 @@ const Home = () => {
                   "Not on this list",
                 ]}
                 {...form.getInputProps("school")}
-              />
+              /> */}
 
-              <TextInput
+              {/* <TextInput
                 label="[Optional] If your school was not on the list, please add it below"
                 {...form.getInputProps("otherSchool")}
-              />
+              /> */}
 
-              <TextInput
+              {/* <TextInput
                 label="[Optional] Phone Number"
                 placeholder="XXX-XXX-XXXX"
                 {...form.getInputProps("phone")}
-              />
+              /> */}
             </Stack>
           </Fieldset>
 
@@ -221,12 +222,13 @@ const Home = () => {
                 {...form.getInputProps("lookingFor")}
               />
 
-              <Select
+              {/* <Select
                 label="Would you like us to send you restaurant recommendations?"
                 placeholder="Choose One"
                 data={["Yes", "No"]}
                 {...form.getInputProps("restaurantRecs")}
-              />
+              /> */}
+
               <Select
                 label="For love, I would like to be matched with..."
                 placeholder="Choose One"
@@ -256,7 +258,7 @@ const Home = () => {
               <Title order={5}>OR</Title>
 
               <TextInput
-                label="Yelp Link"
+                label="Yelp Profile"
                 placeholder="@belimatch"
                 {...form.getInputProps("yelp")}
               />
@@ -264,15 +266,13 @@ const Home = () => {
               <Title order={5}>OR</Title>
 
               <Textarea
-                label="The Names/City of your Top 5 Favorite Restaurants"
-                description="Use the format {Restaurant Name} - {City}, {State})"
+                label="The Names of your Top 3 Favorite Restaurants"
+                description="Pick some restaurants near your college!"
                 autosize
-                placeholder="McDonald's - San Francisco, CA 
-KFC - San Francisco, CA
-Burger King - Los Angeles, CA
-Subway - Mountain View, CA
-Dominos Pizza - Mountain View, CA"
-                minRows={5}
+                placeholder="Ippudo
+Chez Penisse
+Top Dog"
+                minRows={3}
                 {...form.getInputProps("restaurants")}
               />
 
