@@ -1,6 +1,7 @@
 import json
 from typing import Dict
 import numpy as np
+import pandas as pd
 from scipy.optimize import linear_sum_assignment
 
 ###General workflow: 
@@ -80,7 +81,19 @@ for i in range(len(userid)):
                 compat+=1
 
         #use Beli data 
-        #TODO
+        topbeli="top_beli_restaurants"
+        top1,top2=[],[]
+        if(topbeli in user1):
+            top1=user1[topbeli]
+        if(topbeli in user2):
+            top2=user2[topbeli]
+        if(len(top1)>0 and len(top2)>0):
+            prices1=[]
+            tags1=[]
+            for restaurant in top1:
+                tags1+=restaurant["tags"]
+                prices1.append(len(restaurant["price"]))
+            #TODO
 
         #Compatibility score:
         compatibilities[i,j]=compat
@@ -92,11 +105,18 @@ friend_compatibilities=friend_mask*compatibilities
 # "optimize"
 love_rows, love_cols = linear_sum_assignment(love_compatibilities, maximize=True)
 friend_rows, friend_cols=linear_sum_assignment(friend_compatibilities,maximize=True)
-print(love_mask)
-print(compatibilities)
-print("Love matches")
-for row, col in zip(love_rows, love_cols):
-    print(f"Matched pair: ({userid[row]}, {userid[col]}) with weight {love_compatibilities[row, col]}")
-print("Friendship matches")
-for row, col in zip(friend_rows, friend_cols):
-    print(f"Matched pair: ({userid[row]}, {userid[col]}) with weight {friend_compatibilities[row, col]}")
+# print(love_mask)
+# print(compatibilities)
+# print("Love matches")
+# for row, col in zip(love_rows, love_cols):
+#     print(f"Matched pair: ({userid[row]}, {userid[col]}) with weight {love_compatibilities[row, col]}")
+# print("Friendship matches")
+# for row, col in zip(friend_rows, friend_cols):
+#     print(f"Matched pair: ({userid[row]}, {userid[col]}) with weight {friend_compatibilities[row, col]}")
+emails1=[userid[row] for row in love_rows]
+names1=[user_data[email]["firstName"]+" "+user_data[email]["lastName"] for email in emails1]
+emails2=[userid[col] for col in love_cols]
+names2=[user_data[email]["firstName"]+" "+user_data[email]["lastName"] for email in emails2]
+lovers={"Email 1": emails1, "Name 1": names1, "Email 2": emails2, "Name 2": names2}
+df=pd.DataFrame(lovers)
+df.to_csv("matchings.csv")
