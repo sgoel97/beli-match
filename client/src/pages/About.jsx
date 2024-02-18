@@ -3,6 +3,7 @@ import { Text, Box, Title } from "@mantine/core";
 
 import Layout from "../components/Layout";
 import Heading from "../components/Heading";
+import Logo from "../assets/logo_img.png";
 
 const About = () => {
   useEffect(() => {
@@ -11,6 +12,9 @@ const About = () => {
 
   return (
     <Layout>
+      <Box align="center">
+        <img src={Logo} height={65} />
+      </Box>
       <Heading title="About Us" />
       <Box m="auto" align="center" style={{ maxWidth: 600 }}>
         <Text>
