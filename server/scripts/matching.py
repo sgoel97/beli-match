@@ -3,16 +3,24 @@ from typing import Dict
 import numpy as np
 from scipy.optimize import linear_sum_assignment
 
+###General workflow: 
+# Load data
+# Store users in 2D array of compatibilities
+# Create love and friendship possiblities (masks of 0s and 1s)
+# Create compatibility matrix
+# Output pairs (currently using linear_sum_assignment, but taking the log would be better. Still need to figure
+# out how to deal with the 0s)
+
+###LOAD DATA ###
 # Open the JSON file
 with open("top_restaurants.json", 'r') as json_file:
     # Load JSON data into a Python dictionary
     top_restaurants = json.load(json_file)
-
-
 with open("user_data.json", 'r') as json_file:
     # Load JSON data into a Python dictionary
     user_data: Dict[str, Dict] = json.load(json_file)
 
+### CREATE MATRICES compatibility, love_mask, friend_mask
 # assume user_data is a nested dictionary with keys being user emails, 
 # and user_data[email] being another dictionary of user responses
 
@@ -26,6 +34,8 @@ for email in user_data:
 compatibilities=np.zeros((len(userid), len(userid)))
 love_mask = np.zeros((len(userid),len(userid)))
 friend_mask = np.zeros((len(userid),len(userid)))
+
+## Responses
 loveable: set[str]={"Love and Friendship","Love"}
 friendable:set[str]={"Love and Friendship","Friendship"}
 gendermap: dict[str, int]={"Male":0, "Female":1, "Nonbinary":2}
@@ -39,6 +49,9 @@ prefmap: dict[str, set[int]]={
                   "People of all genders":{0,1,2},
                   "Only looking for friends":{},
 }
+
+
+### Iterate through users
 for i in range(len(userid)):
     user1: Dict=user_data[userid[i]]
     user1love: int=1 if user1["lookingFor"] in loveable else 0
@@ -75,6 +88,8 @@ for i in range(len(userid)):
 
 love_compatibilities=love_mask*compatibilities
 friend_compatibilities=friend_mask*compatibilities
+
+# "optimize"
 love_rows, love_cols = linear_sum_assignment(love_compatibilities, maximize=True)
 friend_rows, friend_cols=linear_sum_assignment(friend_compatibilities,maximize=True)
 print(love_mask)
