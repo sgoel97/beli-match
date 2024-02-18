@@ -6,6 +6,7 @@ import {
   Flex,
   Button,
   TextInput,
+  Textarea,
   Select,
   Checkbox,
   Text,
@@ -134,6 +135,12 @@ const Home = () => {
               </Flex>
 
               <TextInput
+                label="Instagram Handle or Facebook Link"
+                placeholder="@belimatch"
+                {...form.getInputProps("insta")}
+              />
+
+              <TextInput
                 label="School Email Address"
                 placeholder="carolxu@stanford.edu"
                 {...form.getInputProps("email")}
@@ -188,12 +195,6 @@ const Home = () => {
               <TextInput
                 label="[Optional] If your school was not on the list, please add it below"
                 {...form.getInputProps("otherSchool")}
-              />
-
-              <TextInput
-                label="Instagram Handle or Facebook Link"
-                placeholder="@belimatch"
-                {...form.getInputProps("insta")}
               />
 
               <TextInput
@@ -262,10 +263,16 @@ const Home = () => {
 
               <Title order={5}>OR</Title>
 
-              <TextInput
+              <Textarea
                 label="The Names/City of your Top 5 Favorite Restaurants"
                 description="Use the format {Restaurant Name} - {City}, {State})"
-                placeholder="@belimatch"
+                autosize
+                placeholder="McDonald's - San Francisco, CA 
+KFC - San Francisco, CA
+Burger King - Los Angeles, CA
+Subway - Mountain View, CA
+Dominos Pizza - Mountain View, CA"
+                minRows={5}
                 {...form.getInputProps("restaurants")}
               />
 
