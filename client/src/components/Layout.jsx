@@ -1,4 +1,4 @@
-import { AppShell, Container, Group, Burger } from "@mantine/core";
+import { AppShell, Container, Group, Burger, Box, Center } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./header.module.css";
 import Logo from "../assets/logo.png";
@@ -26,9 +26,17 @@ const Layout = ({ children, ...style }) => {
   ));
 
   return (
-    <AppShell header={{ height: 70 }} padding="md">
-      <AppShell.Header>
-        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+    <Box style={{ width: "100vw", minHeight: "100vh" }}>
+      <header
+        style={{
+          borderBottom: "1px solid gray",
+          position: "fixed",
+          top: 0,
+          width: "100%",
+          zIndex: 10,
+          backgroundColor: "white",
+        }}
+      >
         <Container size="xl" className={classes.inner}>
           <Group>
             <img src={Logo} height={50} />
@@ -39,13 +47,26 @@ const Layout = ({ children, ...style }) => {
 
           <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
         </Container>
-      </AppShell.Header>
-      <AppShell.Main style={{ width: "100vw" }}>
-        <Container size="xl" style={style}>
-          {children}
-        </Container>
-      </AppShell.Main>
-    </AppShell>
+      </header>
+
+      <Container my={32} py={80} size="xl" style={style}>
+        {children}
+      </Container>
+      <footer
+        style={{
+          borderTop: "1px solid gray",
+          position: "fixed",
+          bottom: 0,
+          width: "100%",
+          zIndex: 10,
+          backgroundColor: "white",
+        }}
+      >
+        <Center>
+          <p>Made with ❤️ at Treehacks</p>
+        </Center>
+      </footer>
+    </Box>
   );
 };
 
