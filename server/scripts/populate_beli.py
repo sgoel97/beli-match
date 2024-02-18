@@ -123,7 +123,7 @@ def download_all_data_as_json():
     with open('user_data.json', 'w') as file:
         json.dump(user_dict, file)
 
-download_all_data_as_json()
+# download_all_data_as_json()
 # populate_restaurants_from_beli('sgoel9@berkeley.edu')
 # populate_all_beli_restaurants()
 # Close the browser
